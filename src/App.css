@@ -401,6 +401,21 @@ body {
   color: var(--white);
 }
 
+/* ── Loading label ── */
+.loading-label {
+  text-align: center;
+  margin-top: 0.875rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
 /* ── Mobile ── */
 @media (max-width: 600px) {
   .header {

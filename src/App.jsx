@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getRecommendations } from './utils/recommendation.js'
+import { looksLikePerfumeName, extractScentProfile } from './utils/claudeApi.js'
 
 const EXAMPLE_CHIPS = [
   'Oud', 'Rose', 'Musk', 'Fresh', 'Smoky',
@@ -7,13 +8,32 @@ const EXAMPLE_CHIPS = [
 ]
 
 export default function App() {
-  const [input, setInput]         = useState('')
-  const [results, setResults]     = useState([])
+  const [input, setInput]             = useState('')
+  const [results, setResults]         = useState([])
   const [hasSearched, setHasSearched] = useState(false)
+  const [loading, setLoading]         = useState(false)
 
-  function handleSearch() {
-    setResults(getRecommendations(input))
+  async function handleSearch() {
+    if (!input.trim()) return
+
     setHasSearched(true)
+
+    if (looksLikePerfumeName(input)) {
+      // Looks like a brand/product name — ask Claude to extract its scent profile
+      setLoading(true)
+      try {
+        const extractedTerms = await extractScentProfile(input)
+        setResults(getRecommendations(extractedTerms))
+      } catch {
+        // API failed — fall back to local scoring silently
+        setResults(getRecommendations(input))
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      // Free notes or mood words — go straight to local scoring
+      setResults(getRecommendations(input))
+    }
   }
 
   function handleKeyDown(e) {
@@ -52,8 +72,9 @@ export default function App() {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Try: oud, rose, smoky, warm"
+          placeholder="Try: oud, rose, smoky, warm — or a perfume name like Creed Aventus"
           rows={3}
+          disabled={loading}
           aria-label="Describe your scent preferences"
         />
 
@@ -64,6 +85,7 @@ export default function App() {
               className="chip"
               onClick={() => handleChipClick(chip)}
               type="button"
+              disabled={loading}
             >
               {chip}
             </button>
@@ -73,15 +95,21 @@ export default function App() {
         <button
           className="find-btn"
           onClick={handleSearch}
-          disabled={!input.trim()}
+          disabled={!input.trim() || loading}
           type="button"
         >
-          Find My Scent
+          {loading ? 'Analysing…' : 'Find My Scent'}
         </button>
+
+        {loading && (
+          <p className="loading-label" aria-live="polite">
+            Analysing your scent profile…
+          </p>
+        )}
       </section>
 
       {/* ── Results ── */}
-      {hasSearched && (
+      {hasSearched && !loading && (
         <section className="results-section" aria-live="polite">
           {results.length === 0 ? (
             <div className="no-results">
