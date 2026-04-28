@@ -1,19 +1,15 @@
-Scrap the Vite proxy approach entirely. Instead, create a simple Express backend server to handle the Claude API call securely.
+Convert the Express server.js into a Vercel serverless function so the app can be deployed to Vercel for free.
 
-1. Install dependencies:
-npm install express cors dotenv
+1. Create a new folder called api/ in the project root
+2. Inside it create a file called claude.js with this structure:
 
-2. Create a new file called server.js in the project root:
-
-const express = require('express')
-const cors = require('cors')
-require('dotenv').config()
-
-const app = express()
-app.use(cors())
-app.use(express.json())
-
-app.post('/api/claude', async (req, res) => {
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  
+  if (req.method === 'OPTIONS') return res.status(200).end()
+  
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -29,13 +25,13 @@ app.post('/api/claude', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
-})
+}
 
-app.listen(3001, () => console.log('Proxy server running on port 3001'))
+3. Update claudeApi.js to fetch from /api/claude (same as before — Vercel routes it automatically)
 
-3. Update claudeApi.js to fetch from http://localhost:3001/api/claude instead of any Anthropic URL directly. No auth headers in the frontend fetch at all.
+4. Create a vercel.json in the project root:
+{
+  "rewrites": [{ "source": "/api/claude", "destination": "/api/claude" }]
+}
 
-4. Update package.json scripts to add:
-"server": "node server.js"
-
-5. Remove the proxy config from vite.config.js entirely — clean it back to default.
+5. Update package.json build script to just: "vite build"
