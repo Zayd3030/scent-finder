@@ -52,7 +52,7 @@ export async function extractScentProfile(userInput) {
     `No explanation, no markdown, just raw JSON.`
 
   // Auth headers are handled by the Express server — no auth sent from the frontend.
-  const response = await fetch('http://localhost:3001/api/claude', {
+  const response = await fetch('/api/claude', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
