@@ -33,7 +33,11 @@ export default function App() {
     <div className="app">
       {/* ── Header ── */}
       <header className="header">
-        <p className="brand">HOUSE OF AB</p>
+        <img
+          src="/House of AB Logo - 4.png"
+          alt="House of AB"
+          className="logo"
+        />
         <h1 className="title">Find Your House of AB Scent</h1>
         <p className="subtitle">
           Enter your favourite perfume, notes, or mood — and discover the scent

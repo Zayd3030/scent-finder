@@ -7,15 +7,14 @@
 
 /* ── Design tokens ── */
 :root {
-  --black:       #0F0F0F;
-  --charcoal:    #1A1A1A;
+  --white:       #FFFFFF;
+  --off-white:   #F8F8F8;
+  --border:      #E8E8E8;
+  --navy:        #0D1F3C;
+  --navy-mid:    rgba(13, 31, 60, 0.08);
+  --muted:       #6B7A8D;
   --gold:        #C6A37A;
   --gold-light:  #D4B896;
-  --ivory:       #E8DCCB;
-  --white:       #F5F5F5;
-  --muted:       #666666;
-  --border:      rgba(198, 163, 122, 0.18);
-  --border-dim:  rgba(245, 245, 245, 0.08);
 
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans:  'Montserrat', system-ui, sans-serif;
@@ -25,8 +24,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
-  color: var(--ivory);
+  background: var(--white);
+  color: var(--navy);
   font-family: var(--font-sans);
   font-weight: 300;
   line-height: 1.6;
@@ -44,48 +43,43 @@ body {
 /* ── Header ── */
 .header {
   text-align: center;
-  padding: 5rem 0 3.5rem;
+  padding: 4rem 0 3rem;
 }
 
-.brand {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.35em;
-  color: var(--gold);
-  margin-bottom: 1.75rem;
-  text-transform: uppercase;
+.logo {
+  width: 120px;
+  height: auto;
+  display: block;
+  margin: 0 auto 2rem;
 }
 
 .title {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 5.5vw, 3.25rem);
-  font-weight: 300;
-  color: var(--white);
+  font-size: clamp(1.85rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--navy);
   line-height: 1.15;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
   letter-spacing: 0.01em;
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: var(--ivory);
-  opacity: 0.65;
-  max-width: 480px;
+  color: var(--muted);
+  max-width: 460px;
   margin: 0 auto;
   line-height: 1.75;
   letter-spacing: 0.02em;
 }
 
-/* ── Divider ── */
+/* Thin gold divider under header */
 .header::after {
   content: '';
   display: block;
-  width: 40px;
+  width: 36px;
   height: 1px;
   background: var(--gold);
-  opacity: 0.5;
-  margin: 2rem auto 0;
+  margin: 1.75rem auto 0;
 }
 
 /* ── Input section ── */
@@ -96,10 +90,10 @@ body {
 
 .scent-input {
   width: 100%;
-  background: var(--charcoal);
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: 2px;
-  color: var(--ivory);
+  color: var(--navy);
   font-family: var(--font-sans);
   font-size: 0.9rem;
   font-weight: 300;
@@ -111,12 +105,12 @@ body {
 }
 
 .scent-input:focus {
-  border-color: rgba(198, 163, 122, 0.55);
+  border-color: var(--navy);
 }
 
 .scent-input::placeholder {
   color: var(--muted);
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 /* ── Chips ── */
@@ -129,32 +123,30 @@ body {
 
 .chip {
   background: transparent;
-  border: 1px solid var(--border-dim);
+  border: 1px solid var(--border);
   border-radius: 2px;
-  color: var(--ivory);
+  color: var(--muted);
   cursor: pointer;
   font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 400;
-  letter-spacing: 0.12em;
-  opacity: 0.6;
+  letter-spacing: 0.1em;
   padding: 0.35rem 0.9rem;
   text-transform: uppercase;
-  transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
 .chip:hover {
   border-color: var(--gold);
   color: var(--gold);
-  opacity: 1;
 }
 
-/* ── CTA button ── */
+/* ── Primary button ── */
 .find-btn {
-  background: var(--gold);
+  background: var(--navy);
   border: none;
   border-radius: 2px;
-  color: var(--black);
+  color: var(--white);
   cursor: pointer;
   font-family: var(--font-sans);
   font-size: 0.72rem;
@@ -162,12 +154,12 @@ body {
   letter-spacing: 0.22em;
   padding: 1rem 2rem;
   text-transform: uppercase;
-  transition: background 0.2s, opacity 0.2s;
+  transition: background 0.2s;
   width: 100%;
 }
 
 .find-btn:hover:not(:disabled) {
-  background: var(--gold-light);
+  background: var(--gold);
 }
 
 .find-btn:disabled {
@@ -183,12 +175,11 @@ body {
 .results-title {
   font-family: var(--font-serif);
   font-size: 1.35rem;
-  font-weight: 300;
-  color: var(--white);
+  font-weight: 400;
+  color: var(--navy);
   text-align: center;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   margin-bottom: 2rem;
-  opacity: 0.85;
 }
 
 .results-grid {
@@ -200,16 +191,15 @@ body {
 
 /* ── Result card ── */
 .result-card {
-  background: var(--charcoal);
-  border: 1px solid var(--border-dim);
+  background: var(--off-white);
+  border: 1px solid var(--border);
   border-radius: 2px;
   padding: 2rem 2rem 1.75rem;
   position: relative;
-  transition: border-color 0.25s;
 }
 
 .result-card.best-match {
-  border-color: var(--border);
+  border-color: var(--navy);
 }
 
 /* Best match badge */
@@ -217,8 +207,8 @@ body {
   position: absolute;
   top: -1px;
   right: 1.75rem;
-  background: var(--gold);
-  color: var(--black);
+  background: var(--navy);
+  color: var(--white);
   font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -239,8 +229,8 @@ body {
   font-family: var(--font-serif);
   font-size: 1.85rem;
   font-weight: 400;
-  color: var(--white);
-  letter-spacing: 0.06em;
+  color: var(--navy);
+  letter-spacing: 0.05em;
   line-height: 1;
 }
 
@@ -270,24 +260,24 @@ body {
 
 /* Confidence progress bar */
 .confidence-bar {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.06);
+  height: 2px;
+  background: var(--border);
   margin-bottom: 1.5rem;
   overflow: hidden;
+  border-radius: 1px;
 }
 
 .confidence-fill {
   height: 100%;
   background: var(--gold);
-  opacity: 0.7;
   transition: width 0.7s ease;
 }
 
 /* Description */
 .fragrance-description {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   line-height: 1.85;
-  color: var(--ivory);
+  color: var(--navy);
   opacity: 0.75;
   font-style: italic;
   margin-bottom: 1.5rem;
@@ -327,38 +317,36 @@ body {
 .tag {
   border-radius: 2px;
   font-size: 0.68rem;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.06em;
   padding: 0.2rem 0.55rem;
   line-height: 1.4;
 }
 
 .tag--family {
-  background: rgba(198, 163, 122, 0.09);
-  border: 1px solid rgba(198, 163, 122, 0.28);
-  color: var(--gold-light);
+  background: rgba(198, 163, 122, 0.12);
+  border: 1px solid rgba(198, 163, 122, 0.4);
+  color: #8B6B45;
 }
 
 .tag--note {
-  background: rgba(245, 245, 245, 0.04);
-  border: 1px solid rgba(245, 245, 245, 0.09);
-  color: var(--ivory);
-  opacity: 0.75;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--navy);
+  opacity: 0.8;
 }
 
 .tag--profile {
   background: transparent;
-  border: 1px solid rgba(232, 220, 203, 0.12);
-  color: var(--ivory);
-  opacity: 0.55;
+  border: 1px solid rgba(13, 31, 60, 0.15);
+  color: var(--muted);
 }
 
 /* Explanation line */
 .explanation {
   font-size: 0.75rem;
-  color: var(--gold);
-  opacity: 0.75;
+  color: var(--muted);
   font-style: italic;
-  border-top: 1px solid var(--border-dim);
+  border-top: 1px solid var(--border);
   padding-top: 1rem;
   line-height: 1.65;
 }
@@ -376,25 +364,25 @@ body {
 .cta {
   text-align: center;
   padding: 2.5rem 2rem;
-  border: 1px solid var(--border-dim);
+  border: 1px solid var(--border);
   border-radius: 2px;
+  background: var(--off-white);
 }
 
 .cta-text {
   font-family: var(--font-serif);
   font-size: 1.2rem;
-  font-weight: 300;
-  color: var(--ivory);
-  letter-spacing: 0.03em;
+  font-weight: 400;
+  color: var(--navy);
+  letter-spacing: 0.02em;
   margin-bottom: 1.5rem;
-  opacity: 0.85;
 }
 
 .cta-btn {
-  background: transparent;
-  border: 1px solid var(--gold);
+  background: var(--navy);
+  border: 1px solid var(--navy);
   border-radius: 2px;
-  color: var(--gold);
+  color: var(--white);
   cursor: pointer;
   display: inline-block;
   font-family: var(--font-sans);
@@ -404,18 +392,23 @@ body {
   padding: 0.875rem 2.5rem;
   text-decoration: none;
   text-transform: uppercase;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .cta-btn:hover {
   background: var(--gold);
-  color: var(--black);
+  border-color: var(--gold);
+  color: var(--white);
 }
 
 /* ── Mobile ── */
 @media (max-width: 600px) {
   .header {
-    padding: 3.5rem 0 2.5rem;
+    padding: 2.5rem 0 2rem;
+  }
+
+  .logo {
+    width: 90px;
   }
 
   .result-card {
@@ -446,9 +439,5 @@ body {
 
   .cta {
     padding: 2rem 1rem;
-  }
-
-  .find-btn {
-    padding: 0.9rem 1.5rem;
   }
 }
